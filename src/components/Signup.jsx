@@ -18,7 +18,6 @@ export default function Signup(props) {
 			console.log(file);
 		}
 	};
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
