@@ -15,7 +15,7 @@ export default function Signup(props) {
 		let file = e?.target?.files[0];
 		if (file !== null) {
 			setFile(e.target.files[0]);
-			console.log(file);
+			// console.log(file);
 		}
 	};
     
@@ -32,13 +32,13 @@ export default function Signup(props) {
 
 			function progress(snapshot) {
 				let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-				console.log(progress);
+				// console.log(progress);
 			}
 
 			function error(err) {
 				setLoader(false);
 				setError(true);
-				console.log(err);
+				// console.log(err);
 			}
 
 			async function success() {
@@ -52,12 +52,12 @@ export default function Signup(props) {
 				});
 				setLoader(false);
 				props.history.push("/");
-				console.log(photoURL);
+				// console.log(photoURL);
 			}
 		} catch (err) {
 			setError(true);
 			setLoader(false);
-			console.log(err);
+			// console.log(err);
 		}
 	};
 	return (

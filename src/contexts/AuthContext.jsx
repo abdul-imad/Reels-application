@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import auth from "../firebase";
 export const AuthContext = React.createContext();
 export function AuthProvider({ children }) {
-	console.log("Auth context");
+	// console.log("Auth context");
 	const [currentUser, setUser] = useState();
 	const [loader, setLoader] = useState(true);
 	async function login(email, password) {
@@ -14,9 +14,9 @@ export function AuthProvider({ children }) {
 	async function signUp(email, password) {
 		return await auth.createUserWithEmailAndPassword(email, password);
 	}
-	console.log(loader);
+	// console.log(loader);
 	useEffect(() => {
-		console.log("use Effect");
+		// console.log("use Effect");
 		let resp = auth.onAuthStateChanged((user) => {
 			console.log("Auto Login", user);
 			setUser(user);

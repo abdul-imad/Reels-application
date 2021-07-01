@@ -1,4 +1,4 @@
-import {useContext } from "react";
+import { useContext } from "react";
 import "./App.css";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import login from "./components/Login";
@@ -6,15 +6,15 @@ import signup from "./components/Signup";
 import Profile from "./components/Profile";
 import feed from "./components/Feed";
 import { AuthContext, AuthProvider } from "./contexts/AuthContext";
-export default  function App() {
-    console.log("App")
+export default function App() {
+	// console.log("App")
 	return (
 		<BrowserRouter>
 			<AuthProvider>
 				<Switch>
 					<Route path="/login" component={login}></Route>
 					<Route path="/signup" component={signup}></Route>
-                    <PrivateRoute path="/profile" abc={Profile}></PrivateRoute>
+					<PrivateRoute path="/profile" abc={Profile}></PrivateRoute>
 					<PrivateRoute path="/" exact abc={feed}></PrivateRoute>
 				</Switch>
 			</AuthProvider>
@@ -22,8 +22,8 @@ export default  function App() {
 	);
 }
 function PrivateRoute(parentProps) {
-    console.log("private route")
 	let { currentUser } = useContext(AuthContext);
+	console.log(currentUser);
 	const Component = parentProps.abc;
 	return (
 		<Route
