@@ -8,17 +8,17 @@ export default function Signup(props) {
 	const [password, setPassword] = useState("");
 	const [loader, setLoader] = useState(false);
 	const [err, setError] = useState(false);
-	const [file, setFile] = useState(null);
+	const [profileImg, setProfileImg] = useState(null);
 	const { signUp } = useContext(AuthContext);
 
 	const handleImageUpload = (e) => {
 		let file = e?.target?.files[0];
 		if (file !== null) {
-			setFile(e.target.files[0]);
+			setProfileImg(e.target.files[0]);
 			// console.log(file);
 		}
 	};
-    
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -26,13 +26,13 @@ export default function Signup(props) {
 			let res = await signUp(email, password);
 			let uid = res.user.uid;
 			let uploadPhotoEvent = storage
-				.ref(`/users/${uid}/ProfileImage`)
-				.put(file);
+				.ref(`/users/${uid}/ProfilePic`)
+				.put(profileImg);
 			uploadPhotoEvent.on("state_changed", progress, error, success);
 
 			function progress(snapshot) {
 				let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-				// console.log(progress);
+				console.log(progress);
 			}
 
 			function error(err) {
@@ -44,11 +44,12 @@ export default function Signup(props) {
 			async function success() {
 				let photoURL = await uploadPhotoEvent.snapshot.ref.getDownloadURL();
 				database.users.doc(uid).set({
-					email: email,
 					userId: uid,
 					username,
+					email: email,
 					createdAt: database.getTimeStamp(),
 					profileUrl: photoURL,
+                    postIds:[]
 				});
 				setLoader(false);
 				props.history.push("/");
@@ -57,7 +58,7 @@ export default function Signup(props) {
 		} catch (err) {
 			setError(true);
 			setLoader(false);
-			// console.log(err);
+			console.log(err);
 		}
 	};
 	return (

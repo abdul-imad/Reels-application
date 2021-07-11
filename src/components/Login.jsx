@@ -73,6 +73,7 @@ export default function Login(props) {
 			setLoader(false);
 			props.history.push("/");
 		} catch (err) {
+            console.log(err)
 			setLoader(false);
 			setEmail("");
 			setPassword("");
