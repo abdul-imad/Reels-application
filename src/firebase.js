@@ -13,5 +13,6 @@ export const db = firebase.firestore();
 
 export const database = {
 	users: db.collection("users"),
+	posts: db.collection("posts"),
 	getTimeStamp: firebase.firestore.FieldValue.serverTimestamp,
 };
