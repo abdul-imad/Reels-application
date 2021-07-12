@@ -2,7 +2,7 @@ import React,{useState,useContext} from 'react';
 import { Avatar } from '@material-ui/core';
 import { AuthContext } from "../contexts/AuthContext";
 
-export default function Navbar({user}) {
+export default function Navbar({userData}) {
     const [loader, setLoader]=useState(false);
 	let { signOut } = useContext(AuthContext);
     
@@ -13,7 +13,7 @@ export default function Navbar({user}) {
 	};
     return (
         <div>
-            <Avatar src={user.profileUrl} alt="Profile-Pic" />
+            <Avatar src={userData.profileUrl} alt="Profile-Pic" />
             <button onClick={logout} disabled={loader}>Logout</button>
         </div>
     )
