@@ -1,57 +1,54 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import { useHistory } from "react-router";
 import { storage, database } from "../firebase";
 import { Button } from "@material-ui/core";
 import uuid from "react-uuid";
 
-export default function UploadBtn() {
-	const [loader, setLoader] = useState(false);
+export default function UploadBtn({ userData }) {
+	const [loader, setLoading] = useState(false);
 	const [error, setError] = useState(false);
-	const [reel, setReel] = useState();
 	const { currentUser } = useContext(AuthContext);
 
 	const handleFileUpload = async (e) => {
 		e.preventDefault();
 		let isFile = e?.target?.files[0];
 		if (isFile !== null) {
-			setReel(e.target.files[0]);
 			console.log(isFile);
 			try {
-				setLoader(true);
-				let uploadPhotoEvent = storage.ref(`/posts/${uuid()}`).put(reel);
-				uploadPhotoEvent.on("state_changed", progress, error, success);
-
-				function progress(snapshot) {
-					let progress =
+				const uploadTask = storage.ref(`/posts/${uuid()}`).put(isFile);
+				setLoading(true);
+				const f1 = (snapshot) => {
+					const progress =
 						(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 					console.log(progress);
-				}
-
-				function error(err) {
-					setLoader(false);
-					setError(true);
-					// console.log(err);
-				}
-
-				async function success() {
-					let reelURL = await uploadPhotoEvent.snapshot.ref.getDownloadURL();
-					let postObj = await database.posts.add({
-						likes: [],
+				};
+				const f2 = () => {
+					alert("There was an error in uploading the file");
+					return;
+				};
+				const f3 = async () => {
+					let reelURL = await uploadTask.snapshot.ref.getDownloadURL();
+					let obj = {
 						comments: [],
+						likes: [],
 						reelURL,
 						uid: currentUser.uid,
 						UploadTime: database.getTimeStamp(),
-					});
+					};
+					//   put the post object into post collection
+					let postObj = await database.posts.add(obj);
+					// 3. user postsId -> new post id put
 					await database.users.doc(currentUser.uid).update({
-						postIds: [...currentUser.postIds, postObj.id],
+						postIds: [...userData.postIds, postObj.id],
 					});
-					setLoader(false);
-					// console.log(photoURL);
-				}
+					console.log(postObj.id);
+					setLoading(false);
+				};
+
+				uploadTask.on("state_changed", f1, f2, f3);
 			} catch (err) {
 				setError(true);
-				setLoader(false);
+				setLoading(false);
 				// console.log(err);
 			}
 		}
@@ -65,6 +62,7 @@ export default function UploadBtn() {
 				style={{ display: "none" }}
 				multiple
 				onChange={handleFileUpload}
+				disabled={loader}
 			/>
 			<label htmlFor="video-upload-btn">
 				<Button
