@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { database, storage } from "../firebase";
 
@@ -9,7 +10,8 @@ export default function Signup(props) {
 	const [loader, setLoader] = useState(false);
 	const [err, setError] = useState(false);
 	const [profileImg, setProfileImg] = useState(null);
-	const { signUp } = useContext(AuthContext);
+	const history = useHistory();
+	const { signUp, currentUser } = useContext(AuthContext);
 
 	const handleImageUpload = (e) => {
 		let file = e?.target?.files[0];
@@ -47,9 +49,9 @@ export default function Signup(props) {
 					userId: uid,
 					username,
 					email: email,
+					postIds: [],
 					createdAt: database.getTimeStamp(),
 					profileUrl: photoURL,
-                    postIds:[]
 				});
 				setLoader(false);
 				props.history.push("/");
@@ -61,6 +63,13 @@ export default function Signup(props) {
 			console.log(err);
 		}
 	};
+
+	useEffect(() => {
+		if (currentUser) {
+			history.push("/");
+		}
+	});
+
 	return (
 		<div>
 			<form onSubmit={handleSubmit}>
