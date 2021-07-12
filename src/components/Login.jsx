@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
 	TextField,
 	makeStyles,
@@ -14,6 +14,7 @@ import {
 	CardMedia,
 	Typography,
 } from "@material-ui/core";
+import { useEffect } from "react";
 
 export default function Login(props) {
 	// console.log("Login");
@@ -21,6 +22,8 @@ export default function Login(props) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoader] = useState(false);
+	const { currentUser } = useContext(AuthContext);
+	const history = useHistory();
 
 	let useStyles = makeStyles({
 		centerDivs: {
@@ -65,6 +68,12 @@ export default function Login(props) {
 		},
 	});
 
+	useEffect(() => {
+		if (currentUser) {
+			history.push("/");
+		}
+	});
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -73,7 +82,7 @@ export default function Login(props) {
 			setLoader(false);
 			props.history.push("/");
 		} catch (err) {
-            console.log(err)
+			console.log(err);
 			setLoader(false);
 			setEmail("");
 			setPassword("");
