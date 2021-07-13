@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { database, storage } from "../firebase";
 
-export default function Signup(props) {
+export default function Signup() {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -53,8 +53,10 @@ export default function Signup(props) {
 					createdAt: database.getTimeStamp(),
 					profileUrl: photoURL,
 				});
-				setLoader(false);
-				props.history.push("/");
+				setTimeout(() => {
+					setLoader(false);
+					history.push("/");
+				}, 2000);
 				// console.log(photoURL);
 			}
 		} catch (err) {
@@ -65,9 +67,11 @@ export default function Signup(props) {
 	};
 
 	useEffect(() => {
-		if (currentUser) {
-			history.push("/");
-		}
+		setTimeout(() => {
+			if (currentUser) {
+				history.push("/");
+			}
+		}, 2000);
 	});
 
 	return (

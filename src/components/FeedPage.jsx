@@ -12,13 +12,16 @@ export default function Feed() {
 	const { currentUser } = useContext(AuthContext);
 
 	useEffect(() => {
-		const fetchUser = async () => {
+		const ac = new AbortController();
+		(async function fetchUser() {
 			let currUserData = await database.users.doc(currentUser.uid).get();
 			setUserData(currUserData.data());
 			setPageLoading(false);
+		})();
+		return () => {
+			ac.abort();
 		};
-		fetchUser();
-	}, []);
+	}, [currentUser.uid]);
 
 	return (
 		<div>
@@ -26,7 +29,7 @@ export default function Feed() {
 				<div>Loading....</div>
 			) : (
 				<>
-					<Navbar userData={userData} />
+					{userData.profileUrl && <Navbar userData={userData} />}
 					<UploadBtn userData={userData} />
 					<VideoFeed />
 				</>
