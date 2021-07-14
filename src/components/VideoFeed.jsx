@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { database } from "../firebase";
+import uuid from "react-uuid";
 
 export default function Feed() {
 	const [allPosts, setAllPosts] = useState([]);
@@ -17,10 +18,11 @@ export default function Feed() {
 
 					for (let i = 0; i < allPostsData.length; i++) {
 						let reelURL = allPostsData[i].reelURL;
+						console.log(reelURL);
 						let uid = allPostsData[i].uid;
 						let userData = await database.users.doc(uid).get();
 						let uploaderName = userData.data().username;
-                        console.log(uploaderName)
+						console.log(uploaderName);
 						let avatar = userData.data().profileUrl;
 						postsArr.push({ reelURL, uploaderName, avatar });
 					}
@@ -32,7 +34,7 @@ export default function Feed() {
 
 	return allPosts.map((post, idx) => {
 		return (
-			<div className="post-container">
+			<div className="post-container" key={uuid()}>
 				<Video src={post.reelURL} id={idx} />
 			</div>
 		);
@@ -41,7 +43,7 @@ export default function Feed() {
 
 const Video = (props) => {
 	return (
-		<video className="video-styles" autoPlay loop muted={true} id={props.id}>
+		<video className="video-styles" controls loop muted={true} id={props.id}>
 			<source src={props.src} type="video/mp4"></source>
 		</video>
 	);

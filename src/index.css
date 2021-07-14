@@ -13,9 +13,10 @@ code {
         monospace;
 }
 
-.video-styles{
-    height:86vh;   
-    margin-bottom:5rem;
-    margin-top:2rem;
-    border:1px solid red;
+.video-styles {
+    background-color: gray;
+    height: 86vh;
+    margin-bottom: 5rem;
+    margin-top: 2rem;
+    border: 1px solid red;
 }

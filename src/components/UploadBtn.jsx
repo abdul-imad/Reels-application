@@ -5,7 +5,7 @@ import { Button } from "@material-ui/core";
 import uuid from "react-uuid";
 import ProgressBar from "./ProgressBar";
 
-export default function UploadBtn({ userData }) {
+export default function UploadBtn(props) {
 	const [loader, setLoading] = useState(false);
 	const [progress, setProgress] = useState();
 	const [url, setUrl] = useState(null);
@@ -15,10 +15,12 @@ export default function UploadBtn({ userData }) {
 	const handleFileUpload = async (e) => {
 		e.preventDefault();
 		let isFile = e?.target?.files[0];
-		console.log(isFile.size);
-		if (isFile !== null) {
-			if ((isFile.size / 1024) > 11000) {
-				alert("The selected file is very big");
+		if (isFile !== null && isFile !== undefined) {
+			console.log(isFile);
+			if (isFile.size / 1024 / 1024 > 10) {
+				alert(
+					"Selected video size is too big! The video size should not be more than 10MB!"
+				);
 				return;
 			}
 			console.log(isFile);
@@ -50,13 +52,14 @@ export default function UploadBtn({ userData }) {
 					let postObj = await database.posts.add(obj);
 					// 3. user postsId -> new post id put
 					await database.users.doc(currentUser.uid).update({
-						postIds: [...userData.postIds, postObj.id],
+						postIds: [...props.userData.postIds, postObj.id],
 					});
 					console.log(postObj.id);
 					setLoading(false);
 				};
 
 				uploadTask.on("state_changed", f1, f2, f3);
+				setUrl();
 			} catch (err) {
 				setError(true);
 				setLoading(false);
@@ -66,6 +69,7 @@ export default function UploadBtn({ userData }) {
 	};
 	return (
 		<div>
+			{error && <p></p>}
 			<input
 				type="file"
 				accept="video/*"
