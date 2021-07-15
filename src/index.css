@@ -12,11 +12,16 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
 }
-
-.video-styles {
+.post-container{
+    display: flex;
+    justify-content: center;
+    align-items: center ;
+}
+.videostyles {
+    /* width: vw; */
     background-color: gray;
     height: 86vh;
     margin-bottom: 5rem;
     margin-top: 2rem;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }

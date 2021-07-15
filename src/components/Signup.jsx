@@ -50,6 +50,7 @@ export default function Signup() {
 					username,
 					email: email,
 					postIds: [],
+                    likedPosts:[],
 					createdAt: database.getTimeStamp(),
 					profileUrl: photoURL,
 				});
