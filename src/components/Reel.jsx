@@ -26,6 +26,16 @@ export default function Reel(props) {
 			color: "#ddd",
 		},
 	});
+
+	//video auto scroll on completion
+	const handleAutoScroll = (e) => {
+		let next = ReactDOM.findDOMNode(e.target).parentNode.nextSibling;
+		if (next) {
+			next.scrollIntoView({ behavior: "smooth" });
+			e.target.muted = true;
+		}
+	};
+
 	// post like function
 	const handlePostLiked = async (puid) => {
 		console.log(puid);
@@ -62,6 +72,30 @@ export default function Reel(props) {
 			setIsLiked(false);
 		}
 	};
+
+    function callBack(entries) {
+		console.log(entries);
+		entries.forEach((entry) => {
+			let child = entry.target.children[0];
+			child.play().then(function () {
+				if (entry.isIntersecting === false) {
+					child.pause();
+				}
+			});
+		});
+	}
+	useEffect(() => {
+		let conditionObj = {
+			root: null,
+			threshold: 0.9,
+		};
+		const observer = new IntersectionObserver(callBack, conditionObj);
+        console.log(observer);
+		let elements = document.querySelectorAll(".post-container");
+		elements.forEach((element) => {
+			observer.observe(element);
+		});
+	}, []);
 	useEffect(() => {
 		postIds = document.getElementById(`${props.id}`).parentNode.id;
 	}, []);
@@ -95,9 +129,10 @@ export default function Reel(props) {
 	return (
 		<>
 			<video
+				onEnded={handleAutoScroll}
 				className="videostyles"
 				autoPlay
-				muted={true}
+				muted={true}    
 				id={props.id}
 				puid={postIds}
 			>
