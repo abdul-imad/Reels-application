@@ -12,9 +12,7 @@ import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 let postIds;
 
 export default function Reel(props) {
-	const [allPosts, setAllPosts] = useState([]);
 	const [isLiked, setIsLiked] = useState(false);
-	// const [postIds, setPostIds] = useState([]);
 	const { currentUser } = useContext(AuthContext);
 	console.log(currentUser.uid);
 
@@ -41,7 +39,7 @@ export default function Reel(props) {
 		},
 	});
 
-	//video auto scroll on completion
+	// video auto scroll on completion
 	const handleAutoScroll = (e) => {
 		let next = ReactDOM.findDOMNode(e.target).parentNode.nextSibling;
 		if (next) {
@@ -119,14 +117,11 @@ export default function Reel(props) {
 			let unsub = await database.users.doc(currentUser.uid).get();
 			let userData = unsub.data();
 			let likedPosts = userData.likedPosts;
-			console.log(likedPosts.length);
 			let postIsLiked;
 			if (likedPosts.length > 0) {
 				postIsLiked = likedPosts.filter((puid) => {
 					return puid === postIds;
 				});
-				console.log(postIds);
-				console.log(postIsLiked);
 				if (postIsLiked.length !== 0) {
 					setIsLiked(true);
 				} else {
@@ -135,7 +130,6 @@ export default function Reel(props) {
 			} else {
 				setIsLiked(false);
 			}
-			console.log(props.src);
 			return unsub;
 		})();
 	}, []);
