@@ -8,7 +8,6 @@ import VideoFeed from "./VideoFeed";
 export default function Feed() {
 	const [userData, setUserData] = useState();
 	const [pageLoading, setPageLoading] = useState(true);
-
 	const { currentUser } = useContext(AuthContext);
 
 	useEffect(() => {
