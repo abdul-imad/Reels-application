@@ -6,7 +6,9 @@ import { useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { database } from "../firebase";
 import { makeStyles } from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 let postIds;
 
 export default function Reel(props) {
@@ -18,12 +20,24 @@ export default function Reel(props) {
 
 	const useStyles = makeStyles({
 		liked: {
-			fontSize: "48px",
+			fontSize: "32px",
 			color: "red",
 		},
 		notLiked: {
-			fontSize: "48px",
+			fontSize: "32px",
 			color: "#ddd",
+			marginLeft: "10px",
+			cursor: "pointer",
+		},
+		profilePic: {
+			marginRight: "10px",
+			cursor: "pointer",
+		},
+		comment: {
+			color: "#ddd",
+			fontSize: "32px",
+			marginLeft: "20px",
+			cursor: "pointer",
 		},
 	});
 
@@ -73,7 +87,7 @@ export default function Reel(props) {
 		}
 	};
 
-    function callBack(entries) {
+	function callBack(entries) {
 		console.log(entries);
 		entries.forEach((entry) => {
 			let child = entry.target.children[0];
@@ -87,10 +101,10 @@ export default function Reel(props) {
 	useEffect(() => {
 		let conditionObj = {
 			root: null,
-			threshold: 0.9,
+			threshold: 0.8,
 		};
 		const observer = new IntersectionObserver(callBack, conditionObj);
-        console.log(observer);
+		console.log(observer);
 		let elements = document.querySelectorAll(".post-container");
 		elements.forEach((element) => {
 			observer.observe(element);
@@ -132,19 +146,33 @@ export default function Reel(props) {
 				onEnded={handleAutoScroll}
 				className="videostyles"
 				autoPlay
-				muted={true}    
+				muted={true}
 				id={props.id}
 				puid={postIds}
 			>
 				<source src={props.src} type="video/mp4" />
 				ERROR
 			</video>
-			<FavoriteIcon
-				className={isLiked ? classes.liked : classes.notLiked}
-				onClick={() => {
-					handlePostLiked(postIds);
-				}}
-			/>
+			<div className="post-info">
+				<div className="uploader_info">
+					<Avatar
+						src={props.profilePic}
+						alt="Profile-Pic"
+						className={classes.profilePic}
+					/>
+					<p className="userName">{props.userName}</p>
+					<pre> •</pre>
+				</div>
+				<div className="actions">
+					<FavoriteIcon
+						className={isLiked ? classes.liked : classes.notLiked}
+						onClick={() => {
+							handlePostLiked(postIds);
+						}}
+					/>
+					<ChatBubbleIcon className={classes.comment} />
+				</div>
+			</div>
 		</>
 	);
 }

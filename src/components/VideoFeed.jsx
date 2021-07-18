@@ -37,7 +37,12 @@ export default function Feed() {
 	return allPosts.map((post) => {
 		return (
 			<div className="post-container" key={post.puid}>
-				<Reel src={post.reelURL} userName={post.uploaderName} id={uuid()} />
+				<Reel
+					src={post.reelURL}
+					userName={post.uploaderName}
+					profilePic={post.avatar}
+					id={uuid()}
+				/>
 			</div>
 		);
 	});
