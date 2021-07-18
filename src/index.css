@@ -13,13 +13,30 @@ code {
         monospace;
 }
 
+.navbar {
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.navbar-icons {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+}
+
+.logo img {
+    cursor: pointer;
+    height: 50px;
+}
+
 .post-container {
     /* height: 86vh; */
-    width: 30vw;
+    width: 25vw;
     position: relative;
-    left: calc((100vw - 30vw)/2);
-    /* display: grid;
-    place-items: center; */
+    left: calc((100vw - 25vw)/2);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,7 +57,7 @@ code {
     display: flex;
     flex-direction: column;
     bottom: 10px;
-    left: 10px;
+    left: 0px;
 }
 
 .uploader_info {
@@ -56,4 +73,21 @@ code {
     color: honeydew;
     font-size: 16px;
     cursor: pointer;
+}
+
+.uploadBtnContainer {
+    width: 70%;
+    margin: 30px auto;
+}
+
+.uploadBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress-bar {
+    height: 5px;
+    background: #E1306C;
+    margin-top: 20px;
 }
