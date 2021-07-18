@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { storage, database } from "../firebase";
 import { Button } from "@material-ui/core";
+import PublishRoundedIcon from "@material-ui/icons/PublishRounded";
 import uuid from "react-uuid";
 import ProgressBar from "./ProgressBar";
 
@@ -28,8 +29,9 @@ export default function UploadBtn(props) {
 				const uploadTask = storage.ref(`/posts/${uuid()}`).put(isFile);
 				setLoading(true);
 				const f1 = (snapshot) => {
-					const progress =
-						(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+					const progress = parseInt(
+						(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+					);
 					setProgress(progress);
 					console.log(progress);
 				};
@@ -68,7 +70,7 @@ export default function UploadBtn(props) {
 		}
 	};
 	return (
-		<div>
+		<div className="uploadBtnContainer">
 			{error && <p></p>}
 			<input
 				type="file"
@@ -79,7 +81,7 @@ export default function UploadBtn(props) {
 				onChange={handleFileUpload}
 				disabled={loader}
 			/>
-			<label htmlFor="video-upload-btn">
+			<label htmlFor="video-upload-btn" className="uploadBtn">
 				<Button
 					variant="contained"
 					color="secondary"
@@ -87,9 +89,10 @@ export default function UploadBtn(props) {
 					disabled={loader}
 				>
 					Upload
+					<PublishRoundedIcon />
 				</Button>
 			</label>
-			<ProgressBar progress={progress} url={url} />
+			{progress && <ProgressBar progress={progress} url={url} />}
 		</div>
 	);
 }
