@@ -23,7 +23,7 @@ code {
 
 .navbar-icons {
     display: flex;
-    align-items: flex-end;
+    /* align-items: flex-end; */
     flex-direction: row;
 }
 
