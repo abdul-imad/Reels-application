@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/styles";
 import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
 import ExploreRoundedIcon from "@material-ui/icons/ExploreRounded";
 import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
+import { Link } from "react-router-dom";
 
 export default function Navbar(props) {
 	const [loader, setLoader] = useState(false);
@@ -16,6 +17,7 @@ export default function Navbar(props) {
 			fontSize: "28px",
 			margin: "5px",
 			cursor: "pointer",
+            color:"black"
 		},
 		avatar: {
 			width: "32px",
@@ -38,14 +40,18 @@ export default function Navbar(props) {
 				<img src={logo} alt="" />
 			</div>
 			<div className="navbar-icons">
-				<HomeRoundedIcon titleAccess="home" className={classes.icons} />
+				<Link to="/">
+					<HomeRoundedIcon titleAccess="home" className={classes.icons} />
+				</Link>
 				<ExploreRoundedIcon titleAccess="" className={classes.icons} />
-				<Avatar
-					src={props.userData.profileUrl}
-					titleAccess="Profile"
-					alt="Profile-Pic"
-					className={(classes.icons, classes.avatar)}
-				/>
+				<Link to="/profile">
+					<Avatar
+						src={props.userData.profileUrl}
+						titleAccess="Profile"
+						alt="Profile-Pic"
+						className={(classes.icons, classes.avatar)}
+					/>
+				</Link>
 				<ExitToAppRoundedIcon
 					titleAccess="Logout"
 					onClick={logout}
