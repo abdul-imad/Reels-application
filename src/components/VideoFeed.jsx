@@ -2,7 +2,6 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { database } from "../firebase";
-import uuid from "react-uuid";
 import Reel from "./Reel";
 
 export default function Feed() {
@@ -20,12 +19,13 @@ export default function Feed() {
 
 					for (let i = 0; i < allPostsData.length; i++) {
 						let reelURL = allPostsData[i].reelURL;
+						let likes = allPostsData[i].likes;
 						let uid = allPostsData[i].uid;
 						let puid = snapshot.docs[i].id;
 						let userData = await database.users.doc(uid).get();
 						let uploaderName = userData.data().username;
 						let avatar = userData.data().profileUrl;
-						postsArr.push({ reelURL, uploaderName, avatar, puid });
+						postsArr.push({ reelURL, uploaderName, avatar, puid, likes });
 					}
 					setAllPosts(postsArr);
 				});
@@ -38,10 +38,11 @@ export default function Feed() {
 		return (
 			<div className="post-container" key={post.puid}>
 				<Reel
+					likedArr={post.likes}
 					src={post.reelURL}
 					userName={post.uploaderName}
 					profilePic={post.avatar}
-					id={uuid()}
+					puid={post.puid}
 				/>
 			</div>
 		);
