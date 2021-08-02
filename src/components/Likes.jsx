@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core";
+import { CircularProgress, makeStyles } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { useEffect } from "react";
 import { database } from "../firebase";
@@ -7,23 +7,23 @@ import { database } from "../firebase";
 export default function Likes(props) {
 	const [isLiked, setIsLiked] = useState(null);
 	const [loading, setLoading] = useState(true);
-
+	console.log("like");
 	const useStyles = makeStyles({
 		liked: {
-			fontSize: "32px",
+			fontSize: "24px",
 			color: "red",
 			marginLeft: "10px",
 			cursor: "pointer",
 		},
 		notLiked: {
-			fontSize: "32px",
+			fontSize: "24px",
 			color: "#ddd",
 			marginLeft: "10px",
 			cursor: "pointer",
 		},
 	});
 
-    //function for handling likes
+	//function for handling likes
 	const handlePostLiked = async () => {
 		if (isLiked) {
 			let updatedLikedArr = props.likedArr.filter((el) => {
@@ -48,7 +48,7 @@ export default function Likes(props) {
 		}
 	};
 
-    //check if posts are liked on page load
+	//check if posts are liked on page load
 	useEffect(() => {
 		let check = props.likedArr.includes(props.userData.userId) ? true : false;
 		setIsLiked(check);
@@ -59,7 +59,7 @@ export default function Likes(props) {
 	return (
 		<>
 			{loading ? (
-				<p>loading</p>
+				<CircularProgress color="secondary" />
 			) : (
 				<FavoriteIcon
 					className={isLiked ? classes.liked : classes.notLiked}

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Avatar } from "@material-ui/core";
 import { AuthContext } from "../contexts/AuthContext";
-import logo from "../images/instagram.png";
+import logo from "../images/reels-logo.png";
 import { makeStyles } from "@material-ui/styles";
 import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
 import ExploreRoundedIcon from "@material-ui/icons/ExploreRounded";
@@ -17,11 +17,15 @@ export default function Navbar(props) {
 			fontSize: "28px",
 			margin: "5px",
 			cursor: "pointer",
-            color:"black"
+			color: "black",
 		},
 		avatar: {
 			width: "32px",
 			height: "32px",
+			display: "flex",
+			alignItems: "flex-start",
+			flexDirection: "row",
+			border: "2px solid #E1306C",
 			cursor: "pointer",
 			margin: "5px",
 		},
@@ -40,18 +44,10 @@ export default function Navbar(props) {
 				<img src={logo} alt="" />
 			</div>
 			<div className="navbar-icons">
-				<Link to="/">
+				<Link to="/" style={{ marginBottom: "0px" }}>
 					<HomeRoundedIcon titleAccess="home" className={classes.icons} />
 				</Link>
 				<ExploreRoundedIcon titleAccess="" className={classes.icons} />
-				<Link to="/profile">
-					<Avatar
-						src={props.userData.profileUrl}
-						titleAccess="Profile"
-						alt="Profile-Pic"
-						className={(classes.icons, classes.avatar)}
-					/>
-				</Link>
 				<ExitToAppRoundedIcon
 					titleAccess="Logout"
 					onClick={logout}
@@ -60,6 +56,14 @@ export default function Navbar(props) {
 				>
 					Logout
 				</ExitToAppRoundedIcon>
+				<Link to="/profile">
+					<Avatar
+						src={props.userData.profileUrl}
+						titleAccess="Profile"
+						alt="Profile-Pic"
+						className={(classes.icons, classes.avatar)}
+					/>
+				</Link>
 			</div>
 		</div>
 	);

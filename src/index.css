@@ -23,7 +23,6 @@ code {
 
 .navbar-icons {
     display: flex;
-    /* align-items: flex-end; */
     flex-direction: row;
 }
 
@@ -43,25 +42,23 @@ code {
     flex-direction: column;
     margin-bottom: 5rem;
     margin-top: 2rem;
-    /* margin: 0 auto; */
+    background-color: gray;
+    box-shadow: 0px 0px 10px 0px rgba(255, 98, 98, 0.75);
 }
 
 .videostyles {
-    background-color: gray;
-    /* height: 86vh; */
-    width: 30vw;
+    width: 25vw;
 }
 
 .post-info {
     position: absolute;
     display: flex;
     flex-direction: column;
-    bottom: 10px;
-    left: 0px;
+    bottom: 20px;
+    left: 10px;
 }
 
 .uploader_info {
-    /* position: absolute; */
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -71,7 +68,7 @@ code {
 .userName {
     font-family: 'Poppins', sans-serif;
     color: honeydew;
-    font-size: 16px;
+    font-size: 1rem;
     cursor: pointer;
 }
 
@@ -90,4 +87,46 @@ code {
     height: 5px;
     background: #E1306C;
     margin-top: 20px;
+}
+
+.post-card {
+    position: relative;
+}
+
+.profile-videostyles {
+    background-color: gray;
+    width: 100%;
+}
+
+.profile-post-info {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: 20px;
+    left: 20px;
+}
+
+.profile-userName {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: honeydew;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* ******************************************************** */
+@media only screen and (max-width: 600px) {
+    .post-container {
+        width: 80vw;
+        left: calc((100vw - 80vw)/2);
+        margin-bottom: 3rem;
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .videostyles {
+        width: 80vw;
+    }
 }

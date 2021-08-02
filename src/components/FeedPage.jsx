@@ -1,3 +1,4 @@
+import { CircularProgress } from "@material-ui/core";
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { database } from "../firebase";
@@ -25,7 +26,7 @@ export default function Feed() {
 	return (
 		<div>
 			{pageLoading ? (
-				<div>Loading....</div>
+				<CircularProgress color="secondary" />
 			) : (
 				<>
 					{userData.profileUrl && <Navbar userData={userData} />}

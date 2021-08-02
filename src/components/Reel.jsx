@@ -17,13 +17,16 @@ export default function Reel(props) {
 
 	const useStyles = makeStyles({
 		profilePic: {
+			width: "30px",
+			height: "30px",
+			border: "1px solid #E1306C",
 			marginRight: "10px",
 			cursor: "pointer",
 		},
 		comment: {
 			color: "#ddd",
-			fontSize: "32px",
-			marginLeft: "20px",
+			fontSize: "24px",
+			marginLeft: "1rem",
 			cursor: "pointer",
 		},
 	});
@@ -41,7 +44,7 @@ export default function Reel(props) {
 	async function callBack(entries) {
 		entries.forEach((entry) => {
 			let child = entry.target.children[0];
-            child.play().then(function () {
+			child.play().then(function () {
 				if (entry.isIntersecting === false) {
 					child.pause();
 				}
@@ -96,7 +99,11 @@ export default function Reel(props) {
 						</div>
 						<div className="actions">
 							{!loading && (
-								<Likes userData={userData} likedArr={props.likedArr} puid={props.puid} />
+								<Likes
+									userData={userData}
+									likedArr={props.likedArr}
+									puid={props.puid}
+								/>
 							)}
 							<ChatBubbleIcon className={classes.comment} />
 						</div>
